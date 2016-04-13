@@ -8,14 +8,14 @@
  */
 
 angular.module('sbAdminApp')
-  .directive('sidebar',['$location',function() {
+  .directive('sidebar',['$location', '$state', function($state) {
     return {
       templateUrl:'views/component/sidebar/sidebar.html',
       restrict: 'E',
       replace: true,
       scope: {
       },
-      controller:function($scope){
+      controller:function($scope, $state){
         $scope.collapseVar = [0,1,1,1];
         
         $scope.check = function(x){
@@ -25,6 +25,10 @@ angular.module('sbAdminApp')
           else
             $scope.collapseVar[x] = 1;
         };
+
+        $scope.logout = function(){
+          $state.go('login');
+        }
       }
     }
   }]);

@@ -1,30 +1,35 @@
 <div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">Charts</h1>
+    <div class="col-lg-8 col-md-offset-2">
+        <h2 class="page-header">{{Category}}</h2>
     </div>
     <!-- /.col-lg-12 -->
 </div>
+
 <div class="row">
-    <div class="col-lg-6 col-sm-12" id="line-chart" ng-controller="ChartCtrl">
+    <div class="col-lg-8 col-sm-12 col-md-offset-2" id="line-chart" ng-controller="ChartCtrl">
         <div class="panel panel-default">
-            <div class="panel-heading">Line Chart</div>
+            <div class="panel-heading text-center">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-outline btn-primary">&nbsp7天&nbsp</button>
+                        <button type="button" class="btn btn-outline btn-primary">14天</button>
+                        <button type="button" class="btn btn-outline btn-default">Default</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail2">Email</label>
+                        <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+                    </div>
+                    <button type="submit" class="btn btn-default">Send invitation</button>
+                </form>
+            </div>
             <div class="panel-body">
                 <canvas id="line" class="chart chart-line chart-xl" data="line.data" labels="line.labels" legend="true"
                 click="line.onClick" series="line.series"></canvas>
             </div>
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12" id="bar-chart" ng-controller="ChartCtrl">
-        <div class="panel panel-default">
-            <div class="panel-heading">Bar Chart</div>
-            <div class="panel-body">
-                <canvas id="bar" class="chart chart-bar" data="bar.data" labels="bar.labels" series="bar.series"
-                options="bar.options"></canvas>
-            </div>
-        </div>
-    </div>
 </div>
-<div class="row">
+<!-- <div class="row">
     <div class="col-lg-6 col-sm-12" id="doughnut-chart" ng-controller="ChartCtrl">
         <div class="panel panel-default">
             <div class="panel-heading">Doughnut Chart</div>
@@ -66,4 +71,4 @@
         </div>
         <button type="button" class="btn btn-primary pull-right" ng-click="dynamic.toggle()">Toggle</button>
     </div>
-</div>
+</div> -->

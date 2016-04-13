@@ -13,10 +13,6 @@ angular.module('sbAdminApp')
 			restrict: 'E',
 			replace: true,
 			controller:function($scope){
-				$scope.logout = function(){
-					//alert("logout");
-					window.location="#/login";
-				}
 			}
     	}
 	});

@@ -8,14 +8,16 @@
  * Main module of the application.
  */
 angular
-  .module('sbAdminApp', [
-    'oc.lazyLoad',
-    'ui.router',
-    'ui.bootstrap',
-    'angular-loading-bar'
-  ])
-  .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
-    
+    .module('sbAdminApp', [
+        'oc.lazyLoad',
+        'ui.router',
+        'ui.bootstrap',
+        'angular-loading-bar'
+    ])
+    .constant("BaseUrl", "http://202.120.40.175:")
+    .constant("partnerPort", "21115")
+    .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
+
     $ocLazyLoadProvider.config({
         debug:false,
         events:true
@@ -104,34 +106,34 @@ angular
                 }
             }
         })
-   //   .state('dashboard.table',{
-   //     templateUrl:'views/table.html',
-   //     url:'/table'
-   // })
-   //   .state('dashboard.panels-wells',{
-   //       templateUrl:'views/ui-elements/panels-wells.html',
-   //       url:'/panels-wells'
-   //   })
-   //   .state('dashboard.buttons',{
-   //     templateUrl:'views/ui-elements/buttons.html',
-   //     url:'/buttons'
-   // })
-   //   .state('dashboard.notifications',{
-   //     templateUrl:'views/ui-elements/notifications.html',
-   //     url:'/notifications'
-   // })
-   //   .state('dashboard.typography',{
-   //    templateUrl:'views/ui-elements/typography.html',
-   //    url:'/typography'
-   //})
-   //   .state('dashboard.icons',{
-   //    templateUrl:'views/ui-elements/icons.html',
-   //    url:'/icons'
-   //})
-   //   .state('dashboard.grid',{
-   //    templateUrl:'views/ui-elements/grid.html',
-   //    url:'/grid'
-   //})
-  }]);
+    //   .state('dashboard.table',{
+    //     templateUrl:'views/table.html',
+    //     url:'/table'
+    // })
+    //   .state('dashboard.panels-wells',{
+    //       templateUrl:'views/ui-elements/panels-wells.html',
+    //       url:'/panels-wells'
+    //   })
+    //   .state('dashboard.buttons',{
+    //     templateUrl:'views/ui-elements/buttons.html',
+    //     url:'/buttons'
+    // })
+    //   .state('dashboard.notifications',{
+    //     templateUrl:'views/ui-elements/notifications.html',
+    //     url:'/notifications'
+    // })
+    //   .state('dashboard.typography',{
+    //    templateUrl:'views/ui-elements/typography.html',
+    //    url:'/typography'
+    //})
+    //   .state('dashboard.icons',{
+    //    templateUrl:'views/ui-elements/icons.html',
+    //    url:'/icons'
+    //})
+    //   .state('dashboard.grid',{
+    //    templateUrl:'views/ui-elements/grid.html',
+    //    url:'/grid'
+    //})
+    }]);
 
     
