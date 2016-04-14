@@ -54,7 +54,7 @@ angular
                         files:[
                             'views/component/header/header.js',
                             'views/component/sidebar/sidebar.js',
-                            'views/component/sidebar/sidebar-search/sidebar-search.js'
+                            'scripts/controllers/manageController.js'
                         ]
                     }),
                     $ocLazyLoad.load({
@@ -101,7 +101,32 @@ angular
                     }),
                     $ocLazyLoad.load({
                         name:'sbAdminApp',
-                        files:['scripts/controllers/chartContoller.js']
+                        files:[
+                            'scripts/controllers/chartController.js',
+                            'views/component/header/header.js',
+                            'views/component/sidebar/sidebar.js'
+                        ]
+                    })
+                }
+            }
+        })
+        .state('manage.admin',{
+            templateUrl:'views/admin.html',
+            url:'/admin',
+            controller:'AdminCtrl',
+            resolve: {
+                loadMyFile:function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name:'sbAdminApp',
+                        files:[
+                            'scripts/controllers/adminController.js'
+                        ]
+                    }),
+                    $ocLazyLoad.load({
+                        name:'smart-table',
+                        files:[
+                            'bower_components/angular-smart-table/dist/smart-table.min.js'
+                        ]
                     })
                 }
             }

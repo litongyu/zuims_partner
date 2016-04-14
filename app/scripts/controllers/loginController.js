@@ -16,21 +16,37 @@ angular.module('sbAdminApp')
                 crossDomain: true
             });
         }
+
+        factory.whetheradmin = function(sceneId){
+            return $http({
+                method: "get",
+                url: BaseUrl + partnerPort + "/partner/whetheradmin?sceneId=" + sceneId,
+                crossDomain: true
+            });
+        }
         return factory;
 
     }])
-    .controller('LoginCtrl', ['$scope','$cookies','$state', '$rootScope', 'LoginFactory',
-        function($scope, $cookies, $state, $rootScope, LoginFactory) {
+    .controller('LoginCtrl', ['$scope','$cookies','$rootScope', 'LoginFactory', '$state',
+        function($scope, $cookies, $rootScope, LoginFactory, $state) {
             $scope.login = function(){
                 LoginFactory.login($scope.account, $scope.password)
                     .success(function (data){
-                        if(data.errorMes == "密码错误"){
+                        if(data.status == false){
                             alert("密码错误,请重试");
                             return;
                         }
-                        $cookies.partnerId = data.partnerId;
-                        $rootScope.hehe = data.name;
-                        $state.go('manage.chart');
+                        $cookies.currentUser = JSON.stringify(data);
+                        //$rootScope.username = data.name;
+                        LoginFactory.whetheradmin(data.sceneId)
+                            .success(function (data1){
+                                if(data1.toString() == "true") {
+                                    $state.go('manage.admin');
+                                }
+                                else{
+                                    $state.go('manage.chart');
+                                }
+                            });
                     })
                     .error(function(){
                         alert("登录失败,请检查网络!");

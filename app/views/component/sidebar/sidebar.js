@@ -7,28 +7,60 @@
  * # adminPosHeader
  */
 
+//angular.module('sbAdminApp')
+//  .directive('sidebar',['$location', function() {
+//    return {
+//      templateUrl:'views/component/sidebar/sidebar.html',
+//      restrict: 'E',
+//      replace: true,
+//      scope: {
+//      },
+//      controller:function($scope, $state){
+//        $scope.collapseVar = [0,0,0,0];
+//
+//        $scope.check = function(x){
+//
+//          if($scope.collapseVar[x] == 1) {
+//            $scope.collapseVar[x] = 0;
+//          }
+//          else
+//            $scope.collapseVar[x] = 1;
+//        };
+//
+//        $scope.logout = function(){
+//          $state.go('login');
+//        }
+//      }
+//    }
+//  }]);
 angular.module('sbAdminApp')
-  .directive('sidebar',['$location', '$state', function($state) {
-    return {
-      templateUrl:'views/component/sidebar/sidebar.html',
-      restrict: 'E',
-      replace: true,
-      scope: {
-      },
-      controller:function($scope, $state){
-        $scope.collapseVar = [0,1,1,1];
-        
-        $scope.check = function(x){
-          
-          if($scope.collapseVar[x] == 1)
-            $scope.collapseVar[x] = 0;
-          else
-            $scope.collapseVar[x] = 1;
-        };
+    .directive('sidebar',['$location',function() {
+      return {
+        templateUrl:'scripts/directives/sidebar/sidebar.html',
+        restrict: 'E',
+        replace: true,
+        scope: {
+        },
+        controller:function($scope){
+          $scope.selectedMenu = 'dashboard';
+          $scope.collapseVar = 0;
+          $scope.multiCollapseVar = 0;
 
-        $scope.logout = function(){
-          $state.go('login');
+          $scope.check = function(x){
+
+            if(x==$scope.collapseVar)
+              $scope.collapseVar = 0;
+            else
+              $scope.collapseVar = x;
+          };
+
+          $scope.multiCheck = function(y){
+
+            if(y==$scope.multiCollapseVar)
+              $scope.multiCollapseVar = 0;
+            else
+              $scope.multiCollapseVar = y;
+          };
         }
       }
-    }
-  }]);
+    }]);

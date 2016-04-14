@@ -8,7 +8,35 @@
  */
 angular.module('sbAdminApp')
 	.controller('ChartCtrl', ['$scope', '$timeout', '$rootScope', function ($scope, $timeout, $rootScope) {
-	  	$rootScope.Category = "扫码人数";
+		//alert(document.getElementById("hehe").innerHTML);
+
+		function getToday() {
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			if (month < 10)
+				month = '0' + month;
+			if (day < 10)
+				day = '0' + day;
+			return year + '-' + month + '-' + day;
+		}
+
+		$('#startDate').datetimepicker({
+			viewMode: 'days',
+			format: 'YYYY-MM-DD',
+			maxDate: getToday(),
+			locale: 'zh-cn'
+		});
+
+		$('#endDate').datetimepicker({
+			viewMode: 'days',
+			format: 'YYYY-MM-DD',
+			maxDate: getToday(),
+			locale: 'zh-cn'
+		});
+
+		$rootScope.Category = "扫码人数";
 		$scope.line = {
 			labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
 			series: ['Series A', 'Series B'],

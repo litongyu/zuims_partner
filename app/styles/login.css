@@ -9,3 +9,9 @@
 .login-label{
     font-size: 17px;
 }
+
+.table tr, .table th
+{
+    text-align: center;
+    vertical-align: middle;
+}
