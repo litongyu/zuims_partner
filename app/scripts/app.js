@@ -31,10 +31,12 @@ angular
             url:'/login',
             controller: 'LoginCtrl',
             resolve: {
-                loadMyFiles:function($ocLazyLoad) {
+                loadMyFile:function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name:'sbAdminApp',
-                        files:['scripts/controllers/loginController.js']
+                        files:[
+                            'scripts/controllers/loginController.js'
+                        ]
                     }),
                     $ocLazyLoad.load({
                         name:'ngCookies',
@@ -48,40 +50,17 @@ angular
             templateUrl:'views/manage.html',
             url:'/manage',
             resolve: {
-                loadMyFiles:function($ocLazyLoad) {
+                loadMyDirectives:function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name:'sbAdminApp',
                         files:[
                             'views/component/header/header.js',
-                            'views/component/sidebar/sidebar.js',
-                            'scripts/controllers/manageController.js'
+                            'views/component/sidebar/sidebar.js'
                         ]
-                    }),
-                    $ocLazyLoad.load({
-                        name:'toggle-switch',
-                        files:["bower_components/angular-toggle-switch/angular-toggle-switch.min.js",
-                            "bower_components/angular-toggle-switch/angular-toggle-switch.css"
-                        ]
-                    }),
-                    $ocLazyLoad.load({
-                        name:'ngAnimate',
-                        files:['bower_components/angular-animate/angular-animate.js']
                     }),
                     $ocLazyLoad.load({
                         name:'ngCookies',
                         files:['bower_components/angular-cookies/angular-cookies.js']
-                    }),
-                    $ocLazyLoad.load({
-                        name:'ngResource',
-                        files:['bower_components/angular-resource/angular-resource.js']
-                    }),
-                    $ocLazyLoad.load({
-                        name:'ngSanitize',
-                        files:['bower_components/angular-sanitize/angular-sanitize.js']
-                    }),
-                    $ocLazyLoad.load({
-                        name:'ngTouch',
-                        files:['bower_components/angular-touch/angular-touch.js']
                     });
                 }
             }
@@ -91,7 +70,7 @@ angular
             url:'/chart',
             controller:'ChartCtrl',
             resolve: {
-                loadMyFile:function($ocLazyLoad) {
+                loadMyFiles:function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name:'chart.js',
                         files:[
@@ -102,11 +81,9 @@ angular
                     $ocLazyLoad.load({
                         name:'sbAdminApp',
                         files:[
-                            'scripts/controllers/chartController.js',
-                            'views/component/header/header.js',
-                            'views/component/sidebar/sidebar.js'
+                            'scripts/controllers/chartController.js'
                         ]
-                    })
+                    });
                 }
             }
         })
@@ -115,7 +92,7 @@ angular
             url:'/admin',
             controller:'AdminCtrl',
             resolve: {
-                loadMyFile:function($ocLazyLoad) {
+                loadAdminFile:function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name:'sbAdminApp',
                         files:[
@@ -127,7 +104,13 @@ angular
                         files:[
                             'bower_components/angular-smart-table/dist/smart-table.min.js'
                         ]
-                    })
+                    }),
+                    $ocLazyLoad.load({
+                        name:'fundoo.services',
+                        files:[
+                            'bower_components/angularjs-modal-service/src/createDialog.js'
+                        ]
+                    });
                 }
             }
         })

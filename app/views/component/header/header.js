@@ -12,8 +12,11 @@ angular.module('sbAdminApp')
 			templateUrl:'views/component/header/header.html',
 			restrict: 'E',
 			replace: true,
-			controller:function($scope){
-			}
+			controller:['$scope', '$cookies', function($scope, $cookies){
+				var currentUserStr = $cookies.currentUser;
+				var currentUser = JSON.parse(currentUserStr);
+				$scope.username = currentUser.name;
+			}]
     	}
 	});
 

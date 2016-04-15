@@ -33,11 +33,11 @@ angular.module('sbAdminApp')
                 LoginFactory.login($scope.account, $scope.password)
                     .success(function (data){
                         if(data.status == false){
-                            alert("密码错误,请重试");
+                            alert(data.errorMes);
                             return;
                         }
                         $cookies.currentUser = JSON.stringify(data);
-                        //$rootScope.username = data.name;
+                        console.log(JSON.stringify(data));
                         LoginFactory.whetheradmin(data.sceneId)
                             .success(function (data1){
                                 if(data1.toString() == "true") {
