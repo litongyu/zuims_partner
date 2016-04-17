@@ -36,7 +36,7 @@ angular.module('sbAdminApp')
                             alert(data.errorMes);
                             return;
                         }
-                        $cookies.currentUser = JSON.stringify(data);
+                        $cookies.putObject('currentUser', data);
                         console.log(JSON.stringify(data));
                         LoginFactory.whetheradmin(data.sceneId)
                             .success(function (data1){
