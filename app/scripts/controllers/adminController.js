@@ -2,6 +2,11 @@
  * Created by kubenetes on 16/4/14.
  */
 angular.module('sbAdminApp')
+    .filter('toIdentity', function() {
+        return function(admin) {
+            return admin == true || admin == "true" ? "管理员" : "非管理员";
+        };
+    })
     .factory("AdminFactory",['$http', "BaseUrl", 'partnerPort', function($http, BaseUrl, partnerPort){
         var factory = {};
         factory.getAllPartner = function(){
@@ -61,14 +66,59 @@ angular.module('sbAdminApp')
         factory.copy = function(from, to){
             for (var key in from) {
                 var val = from[key];
-                to[key] = typeof val === 'object' ? arguments.callee(val) : val;;
+                to[key] = val;
             }
+        };
+
+        factory.createRight = function(info){
+            return $http({
+                method: "POST",
+                url: BaseUrl + partnerPort + "/right/add",
+                headers: {'Content-Type': 'application/json;charset=UTF-8'},
+                data: info,
+                crossDomain: true
+            });
+        };
+
+        factory.getAllRight = function(){
+            return $http({
+                method: "GET",
+                url: BaseUrl + partnerPort + "/right/all",
+                headers: {'Content-Type': 'application/json;charset=UTF-8'},
+                crossDomain: true
+            });
+        };
+
+        factory.updateRight = function(info){
+            return $http({
+                method: "POST",
+                url: BaseUrl + partnerPort + "/right/update",
+                headers: {'Content-Type': 'application/json;charset=UTF-8'},
+                data: info,
+                crossDomain: true
+            });
+        };
+
+        factory.deleteRight = function(info){
+            return $http({
+                method: "POST",
+                url: BaseUrl + partnerPort + "/right/delete",
+                headers: {'Content-Type': 'application/json;charset=UTF-8'},
+                data: info,
+                crossDomain: true
+            });
         }
 
         return factory;
 
     }])
-    .controller('AdminCtrl', ['$scope', 'AdminFactory', 'createDialog', '$filter',function($scope, AdminFactory, createDialog, $filter) {
+    .controller('AdminCtrl', ['$scope', 'AdminFactory', 'createDialog', '$cookies', '$state', function($scope, AdminFactory, createDialog, $cookies, $state) {
+        if($cookies.get('currentUser') == undefined || $cookies.get('authority') != 'admin' ||
+            $cookies.get('authority') == undefined){
+            $state.go('login');
+        }
+        //manage users
+        $scope.itemsByPage = 8;
         AdminFactory.getAllPartner()
             .success(function(data){
                 var result = new Array();
@@ -89,6 +139,12 @@ angular.module('sbAdminApp')
                             $scope.rowCollection.splice(index, 1);
                         }
                     }
+                    else{
+                        alert(data.errorMes);
+                    }
+                })
+                .error(function(){
+                    alert("网络错误");
                 })
         }
 
@@ -133,6 +189,80 @@ angular.module('sbAdminApp')
             });
         };
 
+        //manage rights
+        var createRightFooter = '<button class="btn btn-success btn-outline ng-binding" ng-click="modalCreateRight()">' +
+            '添加&nbsp<span class="glyphicon glyphicon-plus"></span></button>' +
+            '<button class="btn btn-primary btn-outline ng-binding" ng-click="$modalCancel()">' +
+            '取消&nbsp<span class="glyphicon glyphicon-trash"></span></button>';
+
+        var updateRightFooter = '<button class="btn btn-success btn-outline ng-binding" ng-click="modalUpdateRight()">' +
+            '保存&nbsp<span class="glyphicon glyphicon-ok"></span></button>' +
+            '<button class="btn btn-primary btn-outline ng-binding" ng-click="$modalCancel()">' +
+            '取消&nbsp<span class="glyphicon glyphicon-trash"></span></button>';
+
+        AdminFactory.getAllRight()
+            .success(function(data){
+                var result = new Array();
+                for(var x in data){
+                    if(data[x].valid) {
+                        result.push(data[x]);
+                        console.log(data[x]);
+                    }
+                }
+                $scope.rowAuthority = result;
+                $scope.authorityCollection = [].concat($scope.rowAuthority);
+            });
+
+        $scope.createRight = function(){
+            var rowRight = {};
+            createDialog('views/component/modal/rightModal.html', {
+                id: 'createRight',
+                title: '创建新权限',
+                backdrop: true,
+                controller: 'CreateRightCtrl',
+                css: {"left":"0%"},
+                footerTemplate: createRightFooter,
+                success: {label: 'Success'}
+            }, {
+                rowRight: rowRight,
+                edit: false
+            });
+        }
+
+        $scope.updateRight = function(row){
+
+            createDialog('views/component/modal/rightModal.html', {
+                id: 'updateRight',
+                title: '编辑权限',
+                backdrop: true,
+                css: {"left":"0%"},
+                controller: 'UpdateRightCtrl',
+                footerTemplate: updateRightFooter,
+                success: {label: 'Success'}
+            }, {
+                rowRight: row,
+                edit: true
+            });
+        }
+
+        $scope.deleteRight = function(row){
+            AdminFactory.deleteRight(row)
+                .success(function(data){
+                    if(data.status == true){
+                        var index = $scope.rowAuthority.indexOf(row);
+                        if(index !== -1){
+                            $scope.rowAuthority.splice(index, 1);
+                        }
+                    }
+                    else{
+                        alert(data.errorMes);
+                    }
+                })
+                .error(function(){
+                    alert("网络错误");
+                })
+        }
+
     }])
 
     .controller('ModifyCtrl', ['$scope', 'AdminFactory', 'row', 'edit',
@@ -164,7 +294,6 @@ angular.module('sbAdminApp')
 
     .controller('CreateCtrl', ['$scope', 'AdminFactory', 'edit', 'row', '$state',
         function($scope, AdminFactory, edit, row, $state) {
-            //deep copy
             $scope.row = row;
             $scope.edit = edit;
             $scope.create = function(){
@@ -186,4 +315,60 @@ angular.module('sbAdminApp')
                         $scope.$modalCancel();
                     })
             }
-    }]);
+    }])
+
+    .controller('CreateRightCtrl', ['$scope', 'AdminFactory', 'rowRight', 'edit', '$state',
+        function($scope, AdminFactory, rowRight, edit, $state) {
+            //deep copy
+            $scope.rowRight = rowRight;
+            $scope.edit = edit;
+            $scope.modalCreateRight = function(){
+                AdminFactory.createRight($scope.rowRight)
+                    .success(function(data){
+                        if(data.status != true){
+                            alert(data.errorMes);
+                            $scope.$modalCancel();
+
+                        }
+                        else{
+                            alert("添加成功");
+                            $scope.$modalCancel();
+                            $state.reload();
+                        }
+                    })
+                    .error(function(){
+                        alert("网络错误");
+                        $scope.$modalCancel();
+                    })
+            }
+        }])
+
+    .controller('UpdateRightCtrl', ['$scope', 'AdminFactory', 'rowRight', 'edit', '$state',
+        function($scope, AdminFactory, rowRight, edit, $state) {
+            $scope.rowRight = AdminFactory.clone(rowRight);
+            $scope.edit = edit;
+            $scope.modalUpdateRight = function(){
+                console.log($scope.rowRight);
+                AdminFactory.updateRight($scope.rowRight)
+                    .success(function(data){
+                        if(data.status != true){
+                            alert(data.errorMes);
+                            $scope.$modalCancel();
+
+                        }
+                        else{
+                            alert("修改成功");
+                            AdminFactory.copy($scope.rowRight, rowRight);
+                            console.log(rowRight);
+                            $scope.$modalCancel();
+                        }
+                    })
+                    .error(function(){
+                        alert("网络错误");
+                        $scope.$modalCancel();
+                    })
+            }
+
+        }]);
+
+

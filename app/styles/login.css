@@ -16,7 +16,7 @@
     font-size: 14px;
     border-color: #ddd;
     border-top: 1px;
-    border-right: 1px;
+    border-right-width: 0px;
     border-left-width: 1px;
     border-bottom-width: 1px;
 }
@@ -25,6 +25,7 @@
 {
     border-left-width: 0px;
     border-bottom-width: 0px;
+    border-right-width: 0px;
 }
 .table-bordered
 {
@@ -50,6 +51,25 @@
 .table-bordered > tbody > tr:last-child > td:last-child
 {
     border-bottom-right-radius: 4px;
+}
+
+.table-bordered > thead > tr > th:last-child, .table-bordered > tbody > tr > td:last-child
+{
+    border-right-width: 1px;
+}
+
+tfoot {
+    display: table-footer-group;
+    vertical-align: middle;
+    border-color: inherit;
+    border-left-width: 0px;
+    border-right-width: 0px;
+}
+
+.table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr, .table-bordered > tfoot
+{
+    border: 0px; /* 单元格边框 */
+    border-right-width: 0px;
 }
 
 .controls{
@@ -87,4 +107,9 @@
 {
     margin-left: 200px;
 }
+
+.text-center {
+    text-align: center;
+}
+
 

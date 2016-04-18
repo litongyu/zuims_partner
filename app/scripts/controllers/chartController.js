@@ -7,9 +7,11 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-	.controller('ChartCtrl', ['$scope', '$timeout', '$rootScope', function ($scope, $timeout, $rootScope) {
+	.controller('ChartCtrl', ['$scope', '$timeout', '$rootScope', '$cookies', '$state', function ($scope, $timeout, $rootScope, $cookies, $state) {
 		//alert(document.getElementById("hehe").innerHTML);
-
+		if($cookies.get('currentUser') == undefined || $cookies.get('authority') == undefined){
+			$state.go('login');
+		}
 		function getToday() {
 			var date = new Date();
 			var year = date.getFullYear();

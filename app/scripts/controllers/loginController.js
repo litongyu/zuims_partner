@@ -29,6 +29,14 @@ angular.module('sbAdminApp')
     }])
     .controller('LoginCtrl', ['$scope','$cookies','$rootScope', 'LoginFactory', '$state',
         function($scope, $cookies, $rootScope, LoginFactory, $state) {
+            if($cookies.get('currentUser') != undefined && $cookies.get('authority') != undefined){
+                if($cookies.get('authority') == 'admin'){
+                    $state.go('manage.admin');
+                }
+                else if($cookies.get('authority') == 'partner'){
+                    $state.go('manage.chart');
+                }
+            }
             $scope.login = function(){
                 LoginFactory.login($scope.account, $scope.password)
                     .success(function (data){
@@ -36,14 +44,19 @@ angular.module('sbAdminApp')
                             alert(data.errorMes);
                             return;
                         }
-                        $cookies.putObject('currentUser', data);
+                        var expireDate = new Date();
+                        expireDate.setDate(expireDate.getDate() + 1);
+                        console.log($cookies.get("hhh") == undefined);
+                        $cookies.putObject('currentUser', data, {'expires': expireDate});
                         console.log(JSON.stringify(data));
                         LoginFactory.whetheradmin(data.sceneId)
                             .success(function (data1){
                                 if(data1.toString() == "true") {
+                                    $cookies.put('authority', 'admin', {'expires': expireDate});
                                     $state.go('manage.admin');
                                 }
                                 else{
+                                    $cookies.put('authority', 'partner', {'expires': expireDate});
                                     $state.go('manage.chart');
                                 }
                             });

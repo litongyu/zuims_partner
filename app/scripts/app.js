@@ -49,13 +49,15 @@ angular
         .state('manage',{
             templateUrl:'views/manage.html',
             url:'/manage',
+            controller: 'ManageCtrl',
             resolve: {
                 loadMyDirectives:function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name:'sbAdminApp',
                         files:[
                             'views/component/header/header.js',
-                            'views/component/sidebar/sidebar.js'
+                            'views/component/sidebar/sidebar.js',
+                            'scripts/controllers/manageController.js'
                         ]
                     }),
                     $ocLazyLoad.load({

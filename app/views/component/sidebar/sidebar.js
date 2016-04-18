@@ -13,7 +13,11 @@ angular.module('sbAdminApp')
       templateUrl:'views/component/sidebar/sidebar.html',
       restrict: 'E',
       replace: true,
-      controller:['$scope', '$state', function($scope, $state){
+      controller:['$scope', '$state', '$cookies', function($scope, $state, $cookies){
+        $scope.whetherAdmin = true;
+        if($cookies.get('authority') != "admin"){
+          $scope.whetherAdmin = false;
+        }
         $scope.collapseVar = [0,1,1,1];
 
         $scope.check = function(x){
@@ -26,8 +30,11 @@ angular.module('sbAdminApp')
         };
 
         $scope.logout = function(){
+          $cookies.remove('currentUser');
+          $cookies.remove('authority');
           $state.go('login');
-        };
+        }
+
       }]
     }
   }]);
