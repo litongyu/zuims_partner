@@ -47,6 +47,8 @@ angular.module('sbAdminApp')
                         var expireDate = new Date();
                         expireDate.setDate(expireDate.getDate() + 1);
                         console.log($cookies.get("hhh") == undefined);
+                        data.account = $scope.account;
+                        data.password = $scope.password;
                         $cookies.putObject('currentUser', data, {'expires': expireDate});
                         console.log(JSON.stringify(data));
                         LoginFactory.whetheradmin(data.sceneId)

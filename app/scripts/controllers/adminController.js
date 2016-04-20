@@ -131,21 +131,34 @@ angular.module('sbAdminApp')
                 $scope.displayCollection = [].concat($scope.rowCollection);
             })
         $scope.deletePartner = function(row){
-            AdminFactory.deletePartner(row.partnerId)
-                .success(function(data){
-                    if(data.status == true){
-                        var index = $scope.rowCollection.indexOf(row);
-                        if(index !== -1){
-                            $scope.rowCollection.splice(index, 1);
-                        }
-                    }
-                    else{
-                        alert(data.errorMes);
-                    }
-                })
-                .error(function(){
-                    alert("网络错误");
-                })
+            createDialog('', {
+                id: 'simpleDialog',
+                title: '确认删除用户: ' + row.name + ' ?',
+                backdrop: true,
+                css: {
+                    'left': '0',
+                    'top': '20%'
+                },
+                success: {label: '删除', fn: function() {
+                    AdminFactory.deletePartner(row.partnerId)
+                        .success(function(data){
+                            if(data.status == true){
+                                var index = $scope.rowCollection.indexOf(row);
+                                if(index !== -1){
+                                    $scope.rowCollection.splice(index, 1);
+                                }
+                            }
+                            else{
+                                alert(data.errorMes);
+                            }
+                        })
+                        .error(function(){
+                            alert("网络错误");
+                        })
+                }},
+                cancel: {label: '取消'}
+            });
+
         }
 
         var modalFooter = '<button class="btn btn-success btn-outline ng-binding" ng-click="updateSave()">' +
@@ -246,21 +259,35 @@ angular.module('sbAdminApp')
         }
 
         $scope.deleteRight = function(row){
-            AdminFactory.deleteRight(row)
-                .success(function(data){
-                    if(data.status == true){
-                        var index = $scope.rowAuthority.indexOf(row);
-                        if(index !== -1){
-                            $scope.rowAuthority.splice(index, 1);
-                        }
+            createDialog('', {
+                id: 'simpleDialog',
+                title: '确认删除权限: ' + row.sceneId + ' ?',
+                backdrop: true,
+                css: {
+                    'left': '0',
+                    'top': '20%'
+                },
+                success: {
+                    label: '删除', fn: function () {
+                        AdminFactory.deleteRight(row)
+                            .success(function(data){
+                                if(data.status == true){
+                                    var index = $scope.rowAuthority.indexOf(row);
+                                    if(index !== -1){
+                                        $scope.rowAuthority.splice(index, 1);
+                                    }
+                                }
+                                else{
+                                    alert(data.errorMes);
+                                }
+                            })
+                            .error(function(){
+                                alert("网络错误");
+                            })
                     }
-                    else{
-                        alert(data.errorMes);
-                    }
-                })
-                .error(function(){
-                    alert("网络错误");
-                })
+                },
+                cancel: {label: '取消'}
+            });
         }
 
     }])

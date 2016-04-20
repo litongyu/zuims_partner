@@ -116,6 +116,22 @@ angular
                 }
             }
         })
+
+        .state('manage.changePassword',{
+            templateUrl:'views/changePassword.html',
+            url:'/changPassword',
+            controller: 'changePasswordCtrl',
+            resolve: {
+                loadChangePassswordFile:function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name:'sbAdminApp',
+                        files:[
+                            'scripts/controllers/changePasswordController.js'
+                        ]
+                    })
+                }
+            }
+        })
     //   .state('dashboard.table',{
     //     templateUrl:'views/table.html',
     //     url:'/table'
