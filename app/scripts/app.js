@@ -12,7 +12,8 @@ angular
         'oc.lazyLoad',
         'ui.router',
         'ui.bootstrap',
-        'angular-loading-bar'
+        'angular-loading-bar',
+        'ngCookies'
     ])
     .constant("BaseUrl", "http://202.120.40.175:")
     .constant("partnerPort", "21115")
@@ -33,7 +34,7 @@ angular
             url:'/login',
             controller: 'LoginCtrl',
             resolve: {
-                loadMyFile:function($ocLazyLoad) {
+                loadMyFiles:function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name:'sbAdminApp',
                         files:[
