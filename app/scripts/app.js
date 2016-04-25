@@ -16,6 +16,8 @@ angular
     ])
     .constant("BaseUrl", "http://202.120.40.175:")
     .constant("partnerPort", "21115")
+    .constant("QueryUrl", "http://115.159.161.235:")
+    .constant("queryPort","8016")
     .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
 
     $ocLazyLoadProvider.config({
@@ -69,6 +71,9 @@ angular
         })
         .state('manage.chart',{
             templateUrl:'views/chart.html',
+            params: {
+                dataType: 0
+            },
             url:'/chart',
             controller:'ChartCtrl',
             resolve: {
