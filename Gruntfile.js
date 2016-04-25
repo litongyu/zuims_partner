@@ -50,17 +50,18 @@ module.exports = function (grunt) {
       },
       gruntfile: {
         files: ['Gruntfile.js']
-      },
-      livereload: {
-        options: {
-          livereload: '<%= connect.options.livereload %>'
-        },
-        files: [
-          '<%= yeoman.app %>/{,*/}*.html',
-          '.tmp/styles/{,*/}*.css',
-          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
-        ]
       }
+      //,
+      //livereload: {
+      //  options: {
+      //    livereload: '<%= connect.options.livereload %>'
+      //  },
+      //  files: [
+      //    '<%= yeoman.app %>/{,*/}*.html',
+      //    '.tmp/styles/{,*/}*.css',
+      //    '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+      //  ]
+      //}
     },
 
     // The actual grunt server settings
@@ -68,8 +69,8 @@ module.exports = function (grunt) {
       options: {
         port: 8016,
         // Change this to '0.0.0.0' to access the server from outside.
-        hostname: '0.0.0.0',
-        livereload: true
+        hostname: '0.0.0.0'
+        //livereload: 35729
       },
       livereload: {
         options: {
