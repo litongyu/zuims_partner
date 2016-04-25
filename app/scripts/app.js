@@ -12,8 +12,7 @@ angular
         'oc.lazyLoad',
         'ui.router',
         'ui.bootstrap',
-        'angular-loading-bar',
-        'ngCookies'
+        'angular-loading-bar'
     ])
     .constant("BaseUrl", "http://202.120.40.175:")
     .constant("partnerPort", "21115")
@@ -34,7 +33,7 @@ angular
             url:'/login',
             controller: 'LoginCtrl',
             resolve: {
-                loadMyFiles:function($ocLazyLoad) {
+                loadMyFile:function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name:'sbAdminApp',
                         files:[
@@ -43,7 +42,7 @@ angular
                     }),
                     $ocLazyLoad.load({
                         name:'ngCookies',
-                        files:['bower_components/angular-cookies/angular-cookies.js']
+                        files:['bower_components/angular-cookies/angular-cookies.min.js']
                     });
                 }
             }
@@ -65,7 +64,7 @@ angular
                     }),
                     $ocLazyLoad.load({
                         name:'ngCookies',
-                        files:['bower_components/angular-cookies/angular-cookies.js']
+                        files:['bower_components/angular-cookies/angular-cookies.min.js']
                     });
                 }
             }
